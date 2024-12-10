@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-img = mpimg.imread('/home/zegui/FPC/lista04/processamento_imagem/stinkbug.png')
+img = mpimg.imread('stinkbug.png')
 
 img_height, img_width, tmp = img.shape
 plt.imshow(img)
