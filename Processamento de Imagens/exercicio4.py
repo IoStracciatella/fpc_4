@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 
-img = mpimg.imread('/home/zegui/FPC/lista04/processamento_imagem/concrete.jpg')
+img = mpimg.imread('concrete.jpg')
 matriz_recortada = img[:, :, 0]
 plt.imshow(img)
 plt.show()
