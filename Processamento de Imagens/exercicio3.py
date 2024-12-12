@@ -4,21 +4,21 @@ import numpy as np
 
 nIteracoes = int(input('Quantas iterações de suavização você quer aplicar? n: '))
 
-# Requer sobrecargas de, uma matriz, e quantas vezes vc quer iterar a suavização
+# Sobrecargas: uma matriz, qtas vezes vc quer iterar
 def suavizar(imagem, iteracoes):
     
-    # Converte a imagem para escala de cinza, caso ela ainda esteja colorida
-    if len(imagem.shape) == 3: #"Se tiver dimensão de cor"
-        imagem = np.mean(imagem, axis=2) #"Transforme em uma imagem com só 2 dimensões, sem cor"
+    # B&W
+    if len(imagem.shape) == 3: 
+        imagem = np.mean(imagem, axis=2)
     
     linhas, colunas = imagem.shape
     
-    # Copia a imagem original p suavizar depois (não daria certo só referenciar a mesma imagem)
+    # Não daria certo só referenciar a mesma imagem, tem q copiar
     imgCopia = np.copy(imagem)
     
     for _ in range(iteracoes):
 
-        # Novo array (com a imagem) para armazenar uma iteração
+        # Array temp da imagem p cada iteração 
         img_temp = np.copy(imgCopia)
         
         for i in range(1, linhas-1):
