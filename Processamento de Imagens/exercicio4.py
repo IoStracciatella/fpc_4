@@ -4,7 +4,7 @@ import numpy as np
 import random
 
 img_original = mpimg.imread('concrete.jpg')
-# Convertendo a imagem em B&W
+# B&W
 if len(img_original.shape) == 3:
     img_original = np.mean(img_original, axis=2)
 
