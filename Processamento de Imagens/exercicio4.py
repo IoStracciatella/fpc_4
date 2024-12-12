@@ -11,7 +11,7 @@ if len(img_original.shape) == 3:
 img_recortada = img_original[random.randint(75, 100):200, random.randint(100, 150):250]
     
 limiar = 128
-# Clamp na imagem pra que de pra identificar facilmente o agregado
+# Clamp pra identificar o agregado
 img_util = (img_recortada > limiar) * 1.0
 
 pixels_brancos = 0
