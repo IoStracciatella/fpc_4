@@ -2,39 +2,40 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
-def init_grid(N):
-    grid = np.zeros((N, N))
-    grid[N//2, N//2] = 1  # Fonte central
-    # Adiciona obstáculos de forma aleatória
-    num_obstacles = N * N // 10  # Aproximadamente 10% da grade
-    for _ in range(num_obstacles):
+def grade_inic(N):
+    grade = np.zeros((N, N))
+    # Ctr (fica na metade dos dois eixos, por isso //2)
+    grade[N//2, N//2] = 1 
+    # Obstáculos
+    num_obstaculos = N * N // 2 # N * N ficaria muita coisa
+    for _ in range(num_obstaculos):
         x, y = np.random.randint(0, N, 2)
-        grid[x, y] = 2
-    return grid
+        if (x == N // 2 and y == N // 2):
+            continue # Previne
+        grade[x, y] = 2
+    return grade
 
-def update(grid):
-    new_grid = grid.copy()
-    for i in range(1, grid.shape[0] - 1):
-        for j in range(1, grid.shape[1] - 1):
-            if grid[i, j] == 1:  # Alagar vizinhos
+def update(grade):
+    nova_grade = grade.copy()
+    for i in range(1, grade.shape[0] - 1):
+        for j in range(1, grade.shape[1] - 1):
+            if grade[i, j] == 1:
                 for x, y in [(i-1, j), (i+1, j), (i, j-1), (i, j+1)]:
-                    if grid[x, y] == 0:
-                        new_grid[x, y] = 1
-    return new_grid
+                    if grade[x, y] == 0:
+                        nova_grade[x, y] = 1
+    return nova_grade
 
-N = 50  # Tamanho maior da grade para melhor visualização
-grid = init_grid(N)
+grade = grade_inic(50)
 
 fig, ax = plt.subplots()
-cax = ax.matshow(grid, cmap="Blues", vmin=0, vmax=2)  # Melhor contraste de cores
+cax = ax.matshow(grade, cmap="Blues", vmin=0, vmax=2)
 
-def animate(frame):
-    global grid
-    grid = update(grid)
-    cax.set_array(grid)
+def animar(frame):
+    global grade
+    grade = update(grade)
+    cax.set_array(grade)
     return [cax]
 
-ani = FuncAnimation(fig, animate, frames=50, interval=100, blit=True)
-plt.title('Flooding Algorithm')
+ani = FuncAnimation(fig, animar, frames=50, interval=100, blit=True)
+plt.title('Alagamento!')
 plt.show()
-
