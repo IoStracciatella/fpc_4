@@ -14,8 +14,6 @@ limiar = 128
 # Clamp na imagem pra que de pra identificar facilmente o agregado
 img_util = (img_recortada > limiar) * 1.0
 
-img_util = img_util
-
 pixels_brancos = 0
 pixels_pretos = 0
 
