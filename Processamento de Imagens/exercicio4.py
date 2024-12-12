@@ -1,35 +1,35 @@
-import numpy as np
-import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
+import matplotlib.pyplot as plt
+import numpy as np
+import random
 
-img = mpimg.imread('concrete.jpg')
-matriz_recortada = img[:, :, 0]
-plt.imshow(img)
+img_original = mpimg.imread('concrete.jpg')
+# Convertendo a imagem em B&W
+if len(img_original.shape) == 3:
+    img_original = np.mean(img_original, axis=2)
+
+img_recortada = img_original[random.randint(75, 100):200, random.randint(100, 150):250]
+    
+limiar = 128
+# Clamp na imagem pra que de pra identificar facilmente o agregado
+img_util = (img_recortada > limiar) * 1.0
+
+img_util = img_util
+
+pixels_brancos = 0
+pixels_pretos = 0
+
+linhas, colunas = img_util.shape  # Obtém as dimensões da imagem
+
+for i in range(linhas):
+    for j in range(colunas):
+        if img_util[i, j] == 1.0:
+            pixels_brancos += 1
+        elif img_util[i, j] == 0.0:
+            pixels_pretos += 1
+
+qtde_agregado = pixels_pretos/img_util.size
+print(qtde_agregado*100)
+
+plt.imshow(img_recortada, cmap='gray')
 plt.show()
-height, width, tmp = img.shape
-
-def recortar(matriz, height, width, height_inicial = 0, width_inicial = 0):
-    matriz_cortada = np.zeros((height, width, matriz.shape[2]), dtype=matriz.dtype)
-    for i in range(height):
-        for j in range(width):
-            matriz_cortada[i][j] = matriz[height_inicial + i][width_inicial + j]
-    return matriz_cortada
-
-
-matriz_recortada = recortar(img, 100, 200, 150, 150)
-plt.imshow(matriz_recortada)
-plt.show()
-
-def agregados_count(matriz_recortada, limiar):
-    matriz_recortada = matriz_recortada / np.max(matriz_recortada)
-
-    img = (matriz_recortada > limiar) * 1.0
-
-    cinza_escuro = np.sum(img == 0)
-    cinza_claro = np.sum(img == 1)
-    return cinza_escuro, cinza_claro
-
-limiar = 0.5
-cinza_escuro, cinza_claro = agregados_count(matriz_recortada, limiar)
-proporcao =  cinza_escuro / (cinza_escuro + cinza_claro)
-print("A proporção de pixels escuros para claros é de:", proporcao)
