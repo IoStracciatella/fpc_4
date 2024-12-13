@@ -11,6 +11,7 @@ if len(img_original.shape) == 3:
 img_recortada = img_original[random.randint(75, 100):200, random.randint(100, 150):250]
     
 limiar = 128
+limiar = int(input('Defina um limiar (padrão = 128): '))
 # Clamp pra identificar o agregado
 img_util = (img_recortada > limiar) * 1.0
 
